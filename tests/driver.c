@@ -6,16 +6,18 @@
 #include "driver.h"
 
 static Suite *
-calculations_suite(void)
+checksum_suite(void)
 {
 	Suite *s = NULL;
 	TCase *tc_core = NULL;
 
-	s = suite_create("calculation");
+	s = suite_create("checksums");
 	tc_core = tcase_create("core");
 
-	tcase_add_test(tc_core, TEST_ADDITION_SHOULD_BE_OKAY);
-	tcase_add_test(tc_core, TEST_MULTIPLICATION_SHOULD_BE_OKAY);
+	tcase_add_test(tc_core, VERIFY_CRC);
+	tcase_add_test(tc_core, VERIFY_FLETCHER);
+	tcase_add_test(tc_core, VERIFY_XOR);
+	tcase_add_test(tc_core, VERIFY_XOR_PER_BLOCK);
 
 	suite_add_tcase(s, tc_core);
 
@@ -30,7 +32,7 @@ main(void)
 	Suite *s = NULL;
 	SRunner *runner = NULL;
 
-	s = calculations_suite();
+	s = checksum_suite();
 	runner = srunner_create(s);
 
 	srunner_run_all(runner, CK_NORMAL);
